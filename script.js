@@ -39,6 +39,14 @@ topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
 
 topMenuEl.classList.add("flex-around");
 
+// 5. create a sub-menu bar 
+
+const subMenuEl = document.getElementById("sub-menu");
+
+subMenuEl.style.height = "100%";
+subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
+subMenuEl.classList.add("flex-around");
+
 
 //-----------------------------------------------
 //Part 3: Adding Menu Buttons
@@ -69,7 +77,10 @@ menuLinks.forEach(link => {
   aEl.setAttribute("href", link.href);
   aEl.textContent = link.text;
   topMenuEl.appendChild(aEl);
+  const subMenuEl = document.getElementById("sub-menu");
 });
+
+// create a  submenu bar 
 
 //--------------------------------------
 // Part 4 : Adding Interactivity
