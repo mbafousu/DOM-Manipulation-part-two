@@ -39,49 +39,115 @@ topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
 
 topMenuEl.classList.add("flex-around");
 
-// 5. create a sub-menu bar 
+
+//-----------------------------------------------
+//Part 3: Creating a Submenu
+//-----------------------------------------------
 
 const subMenuEl = document.getElementById("sub-menu");
 
 subMenuEl.style.height = "100%";
 subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
 subMenuEl.classList.add("flex-around");
+subMenuEl.style.top = "0";
 
 
-//-----------------------------------------------
-//Part 3: Adding Menu Buttons
-//-----------------------------------------------
+
+
+//---------------------------------------------------------------
+// Part 4 + 5 : Adding Interactivity + Adding Submenu Interaction
+//---------------------------------------------------------------
 
 // Menu Data
 
-// Menu data structure
-
 var menuLinks = [
-  { text: 'about', href: '/about' },
-  { text: 'catalog', href: '/catalog' },
-  { text: 'orders', href: '/orders' },
-  { text: 'account', href: '/account' },
+  { text: "about", href: "/about" },
+
+  {
+    text: "catalog",
+    href: "#",
+    subLinks: [
+      { text: "all", href: "/catalog/all" },
+      { text: "top selling", href: "/catalog/top" },
+      { text: "search", href: "/catalog/search" },
+    ],
+  },
+
+  {
+    text: "orders",
+    href: "#",
+    subLinks: [
+      { text: "new", href: "/orders/new" },
+      { text: "pending", href: "/orders/pending" },
+      { text: "history", href: "/orders/history" },
+    ],
+  },
+
+  {
+    text: "account",
+    href: "#",
+    subLinks: [
+      { text: "profile", href: "/account/profile" },
+      { text: "sign out", href: "/account/signout" },
+    ],
+  },
 ];
 
-// 1. Iterate over the menuLinks array
-// using forEach
+// Build Top  Menu Links
 
-// 2. Create an <a> element.
-// 3. Add the href attribute 
-// 4. set the link text
-// 5. Append each link to topMenuEl
-
-
+topMenuEl.innerHTML = ""; 
 menuLinks.forEach(link => {
   const aEl = document.createElement("a");
   aEl.setAttribute("href", link.href);
   aEl.textContent = link.text;
   topMenuEl.appendChild(aEl);
-  const subMenuEl = document.getElementById("sub-menu");
 });
 
-// create a  submenu bar 
+const topMenuLinks = topMenuEl.querySelectorAll("a");
 
-//--------------------------------------
-// Part 4 : Adding Interactivity
-//--------------------------------------
+// Helper Function to build Submenu
+
+function buildSubmenu(subLinks) {
+  subMenuEl.innerHTML = "";
+
+  subLinks.forEach(link => {
+    const aEl = document.createElement("a");
+    aEl.setAttribute("href", link.href);
+    aEl.textContent = link.text;
+    subMenuEl.appendChild(aEl);
+  });
+}
+
+
+topMenuEl.addEventListener("click", function (evt) {
+  evt.preventDefault();
+  if (evt.target.tagName !== "A") return;
+
+  console.log(evt.target.textContent);
+
+  const clickedLink = evt.target;
+
+  // Find the matching link object in menuLinks
+  const linkObj = menuLinks.find(link => link.text === clickedLink.textContent);
+
+  // If clicked link was already active, deactivate and hide submenu
+  if (clickedLink.classList.contains("active")) {
+    clickedLink.classList.remove("active");
+    subMenuEl.style.top = "0";
+    return;
+  }
+
+  // Otherwise, set clicked active and remove active from others
+  topMenuLinks.forEach(link => link.classList.remove("active"));
+  clickedLink.classList.add("active");
+
+  // Show submenu only if subLinks exist
+  if (linkObj.subLinks) {
+    subMenuEl.style.top = "100%";
+    buildSubmenu(linkObj.subLinks);
+  } else {
+    subMenuEl.style.top = "0";
+  }
+});
+
+
