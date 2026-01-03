@@ -150,4 +150,6 @@ topMenuEl.addEventListener("click", function (evt) {
   }
 });
 
+// Part 6: Completion and Code Review 
+// I tested it and everything works.
 
