@@ -55,7 +55,7 @@ subMenuEl.style.top = "0";
 
 
 //---------------------------------------------------------------
-// Part 4 + 5 : Adding Interactivity + Adding Submenu Interaction
+// Part 4 + 5 : Adding Menu Interaction + Adding Submenu Interaction
 //---------------------------------------------------------------
 
 // Menu Data
